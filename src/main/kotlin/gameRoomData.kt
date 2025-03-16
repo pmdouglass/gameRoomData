@@ -61,4 +61,7 @@ fun Application.module(){
     }
 }
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>): Unit {
+    val port = System.getenv("PORT")?.toIntOrNull() ?: 8080 // Get port from env or default to 8080
+    io.ktor.server.netty.EngineMain.main(args + arrayOf("-port=$port")) // Pass it dynamically
+}
