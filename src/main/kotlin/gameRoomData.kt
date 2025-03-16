@@ -24,7 +24,17 @@ object DatabaseFactory {
         val user = System.getenv("DB_USER") ?: ""
         val password = System.getenv("DB_PASSWORD") ?: ""
 
-        Database.connect(url, driver, user, password)
+        println("Connecting to database init...")
+        println("JDBC_DATABASE-URL: $url")
+        println("DB_USER: $user")
+
+        try {
+            Database.connect(url, driver, user, password)
+            println("Connection successful!")
+        }catch (e: Exception) {
+            println("Connection failed: ${e.message}")
+            e.printStackTrace()
+        }
     }
 }
 
@@ -73,6 +83,10 @@ fun main() {
     // Retrieve the port from Railway's environment variable or default to 8080
     val port = System.getenv("PORT")?.toIntOrNull() ?: 8080
     println("Starting server on port: $port") // Debug log to verify port
+
+    // Initialize the database connection
+    println("Initializing database connection..")
+    DatabaseFactory.init()
 
     // Start the embedded Netty server with the dynamically configured port
     embeddedServer(Netty, port = port, module = Application::module).start(wait = true)
