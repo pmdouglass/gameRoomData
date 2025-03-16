@@ -9,6 +9,7 @@ plugins {
     kotlin("jvm") version "2.1.10"
     kotlin("plugin.serialization") version "2.1.10"
     id("io.ktor.plugin") version "2.3.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "com.example"
@@ -50,4 +51,18 @@ dependencies {
     // Testing
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+}
+
+tasks {
+    shadowJar {
+        archiveBaseName.set("gameRoom")
+        archiveClassifier.set("")
+        archiveVersion.set(version.toString())
+        manifest {
+            attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
+        }
+    }
+    build {
+        dependsOn(shadowJar)
+    }
 }
