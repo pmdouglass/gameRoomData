@@ -54,6 +54,9 @@ dependencies {
 }
 
 tasks {
+    jar {
+        enabled = false
+    }
     shadowJar {
         archiveBaseName.set("gameRoom")
         archiveClassifier.set("")
