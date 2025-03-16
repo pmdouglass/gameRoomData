@@ -2,9 +2,10 @@ package com.example
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.netty.EngineMain
 import io.ktor.server.request.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.Table
@@ -68,5 +69,5 @@ fun Application.module() {
 fun main(args: Array<String>): Unit {
     val port = System.getenv("PORT")?.toIntOrNull() ?: 8080 // Get from env or default to 8080
     println("Starting server on port: $port")
-    EngineMain.main(args + arrayOf("-port=$port")) // Dynamically pass -port argument
+    embeddedServer(Netty, port = port, module = Application::module).start(wait = true)
 }
