@@ -13,6 +13,8 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
+import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.plugins.contentnegotiation.*
 import kotlinx.serialization.Serializable
 
 object DatabaseFactory {
@@ -41,6 +43,7 @@ data class CreateRoomRequest(
 )
 
 fun Application.module() {
+    install(ContentNegotiation) {json()}
     routing {
         get("/") {
             call.respondText("Server is running on port!", ContentType.Text.Plain)
