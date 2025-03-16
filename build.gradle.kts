@@ -16,7 +16,7 @@ group = "com.example"
 version = "0.0.1"
 
 application {
-    mainClass.set("io.ktor.server.netty.EngineMain")
+    mainClass.set("com.example.GameRoomDataKt")
 
 }
 
@@ -62,7 +62,7 @@ tasks {
         archiveClassifier.set("")
         archiveVersion.set(version.toString())
         manifest {
-            attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
+            attributes["Main-Class"] = "com.example.GameRoomDataKt"
         }
     }
     build {

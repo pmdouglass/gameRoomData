@@ -66,8 +66,11 @@ fun Application.module() {
     }
 }
 
-fun main(args: Array<String>): Unit {
-    val port = System.getenv("PORT")?.toIntOrNull() ?: 8080 // Get from env or default to 8080
-    println("Starting server on port: $port")
+fun main() {
+    // Retrieve the port from Railway's environment variable or default to 8080
+    val port = System.getenv("PORT")?.toIntOrNull() ?: 8080
+    println("Starting server on port: $port") // Debug log to verify port
+
+    // Start the embedded Netty server with the dynamically configured port
     embeddedServer(Netty, port = port, module = Application::module).start(wait = true)
 }
